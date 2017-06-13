@@ -1,12 +1,12 @@
 # MercadoPago GO
 
-Basic library for mercadopago
+Basic library for mercadopago (Forked from http://github.com/danteay/mercadopago)
 
 
 ## Install
 
 ```bash
-go get https://github.com/danteay/mercadopago
+go get github.com/facundomedica/mercadopago
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ go get https://github.com/danteay/mercadopago
 ### Importing
 
 ```go
-import mp "github.com/danteay/mercadopago"
+import mp "github.com/facundomedica/mercadopago"
 ```
 
 ### Configuring
