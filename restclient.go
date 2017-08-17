@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"strings"
+	"time"
 )
 
 // RequestData Map data por post in the request
@@ -46,7 +48,16 @@ func (rest *RestClient) Execute(method string, url string, data RequestData, hea
 		}
 	}
 
-	res, errReq := http.DefaultClient.Do(req)
+	netClient := &http.Client{
+		Timeout: time.Second * 10,
+		Transport: &http.Transport{
+			Dial: (&net.Dialer{
+				Timeout: 5 * time.Second,
+			}).Dial,
+			TLSHandshakeTimeout: 5 * time.Second,
+		},
+	}
+	res, errReq := netClient.Do(req)
 	if errReq != nil {
 		return nil, errReq
 	}
@@ -75,8 +86,16 @@ func (rest *RestClient) ExecuteWithStringData(method string, url string, data st
 			req.Header.Add(key, value)
 		}
 	}
-
-	res, errReq := http.DefaultClient.Do(req)
+	netClient := &http.Client{
+		Timeout: time.Second * 10,
+		Transport: &http.Transport{
+			Dial: (&net.Dialer{
+				Timeout: 5 * time.Second,
+			}).Dial,
+			TLSHandshakeTimeout: 5 * time.Second,
+		},
+	}
+	res, errReq := netClient.Do(req)
 	if errReq != nil {
 		return nil, errReq
 	}
