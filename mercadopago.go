@@ -76,7 +76,7 @@ func (mp *MpClient) GetPayment(id string) (Collection, error) {
 		uriPrefix = "/sandbox"
 	}
 
-	url := apiBaseURL + uriPrefix + "/collections/notifications/" + id + "?access_token=" + accessToken
+	url := apiBaseURL + uriPrefix + "v1/payments/" + id + "?access_token=" + accessToken
 
 	response, errReq := mp.rest.Get(url, nil, nil)
 	if errReq != nil {
