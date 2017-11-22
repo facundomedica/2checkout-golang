@@ -1,4 +1,4 @@
-package mercadopago
+package twocheckout
 
 import (
 	"encoding/json"

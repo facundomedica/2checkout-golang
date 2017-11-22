@@ -1,157 +1,126 @@
-package mercadopago
+package twocheckout
 
-type AuthToken struct {
-	AccessToken  string `json:"access_token"`
-	RefreshToken string `json:"refresh_token"`
-	LiveMode     bool   `json:"live_mode"`
-	UserID       int64  `json:"user_id"`
-	TokenType    string `json:"token_type"`
-	ExpiresIn    int64  `json:"expires_id"`
-	Scope        string `json:"scope"`
-}
-
-type Phone struct {
-	AreaCode  string `json:"area_code"`
-	Number    string `json:"number"`
-	Extension string `json:"extension"`
-}
-
-type Identification struct {
-	Type   string `json:"type"`
-	Number string `json:"number"`
-}
-
-type Payer struct {
-	ID             string         `json:"id"`
-	FirstName      string         `json:"first_name"`
-	LastName       string         `json:"last_name"`
-	Phone          Phone          `json:"phone"`
-	Identification Identification `json:"identification"`
-	Email          string         `json:"email"`
-	Nickname       string         `json:"nickname"`
-}
-
-type Collector struct {
-	ID        int64  `json:"id"`
-	FirtsName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Phone     Phone  `json:"phone"`
-	Email     string `json:"email"`
-	Nickname  string `json:"nickname"`
-}
-
-type Collection struct {
-	ID                  int64                  `json:"id"`
-	SiteID              string                 `json:"site_id"`
-	DateCreated         string                 `json:"date_created"`
-	DateApproved        string                 `json:"date_approved"`
-	MoneyReleaseDate    string                 `json:"money_release_date"`
-	LastModified        string                 `json:"last_modified"`
-	Payer               Payer                  `json:"payer"`
-	OrderID             string                 `json:"order_id"`
-	ExternalReference   string                 `json:"external_reference"`
-	MerchantOrderID     string                 `json:"merchant_order_id"`
-	Reason              string                 `json:"reason"`
-	CurrencyID          string                 `json:"currency_id"`
-	TransactionAmount   float64                `json:"transaction_amount"`
-	NetReceivedAmount   float64                `json:"net_received_amount"`
-	TotalPaidAmount     float64                `json:"total_paid_amount"`
-	ShippingCost        float64                `json:"shipping_cost"`
-	CouponAmount        float64                `json:"coupon_amount"`
-	CouponFee           float64                `json:"coupon_fee"`
-	FinanceFee          float64                `json:"finance_fee"`
-	DiscountFee         float64                `json:"discount_fee"`
-	CouponID            string                 `json:"coupon_id"`
-	Status              string                 `json:"status"`
-	StatusDetails       string                 `json:"status_details"`
-	IssuerID            string                 `json:"issuer_id"`
-	InstallmentAmount   float64                `json:"installment_amount"`
-	DeferredPeriod      string                 `json:"deffered_period"`
-	PaymentType         string                 `json:"payment_type"`
-	PaymentMethodID     string                 `json:"payment_method_id"`
-	Marketplace         string                 `json:"marketplace"`
-	OperationType       string                 `json:"operation_type"`
-	MarketplaceFee      float64                `json:"marketplace_fee"`
-	DeductionSchema     string                 `json:"deduction_schema"`
-	Refunds             []interface{}          `json:"refunds"`
-	AmountRefunded      float64                `json:"amount_refunded"`
-	LastModifiedByAdmin string                 `json:"last_modified_by_admin"`
-	APIVersion          string                 `json:"api_version"`
-	ConceptID           string                 `json:"concept_id"`
-	ConceptAmount       float64                `json:"concept_amount"`
-	InternalMetadata    map[string]interface{} `json:"internal_metadata"`
-	Collector           Collector              `json:"collector"`
-}
-
-type Payment struct {
-	Collection Collection `json:"collection"`
-}
-
-type Item struct {
-	ID          string  `json:"id"`
-	Title       string  `json:"title"`
-	CurrencyID  string  `json:"currency_id"`
-	PictureURL  string  `json:"picture_url"`
-	Description string  `json:"description"`
-	CategoryID  string  `json:"category_id"`
-	Quantity    int     `json:"quantity"`
-	UnitPrice   float32 `json:"unit_price"`
-}
-
-type PreferencePayer struct {
-	Name        string `json:"name"`
-	Surname     string `json:"surname"`
-	Email       string `json:"email"`
-	DateCreated string `json:"date_created"`
-	Phone       struct {
-		AreaCode string `json:"area_code"`
-		Number   string `json:"number"`
-	} `json:"phone"`
-	Identification struct {
-		Type   string `json:"type"`
-		Number string `json:"number"`
-	} `json:"identification"`
-	Address struct {
-		StreetName   string `json:"street_name"`
-		StreetNumber int    `json:"street_number"`
-		ZipCode      string `json:"zip_code"`
-	} `json:"address"`
-}
-
-type PaymentMethodID struct {
-	ID string `json:"id"`
-}
-
-type PaymentMethods struct {
-	ExcludedPaymentMethods []PaymentMethodID `json:"excluded_payment_methods"`
-	ExcludedPaymentTypes   []PaymentMethodID `json:"excluded_payment_types"`
-	Installments           int               `json:"installments"`
-	DefaultPaymentMethodID interface{}       `json:"default_payment_method_id"`
-	DefaultInstallments    interface{}       `json:"default_installments"`
-}
-
-type Preference struct {
-	Items    []Item          `json:"items"`
-	Payer    PreferencePayer `json:"payer"`
-	BackUrls struct {
-		Success string `json:"success"`
-		Failure string `json:"failure"`
-		Pending string `json:"pending"`
-	} `json:"back_urls"`
-	AutoReturn     string         `json:"auto_return"`
-	PaymentMethods PaymentMethods `json:"payment_methods"`
-	Shipments      struct {
-		ReceiverAddress struct {
-			ZipCode      string `json:"zip_code"`
-			StreetNumber int    `json:"street_number"`
-			StreetName   string `json:"street_name"`
-			Floor        int    `json:"floor"`
-			Apartment    string `json:"apartment"`
-		} `json:"receiver_address"`
-	} `json:"shipments"`
-	NotificationURL    string `json:"notification_url"`
-	ExternalReference  string `json:"external_reference"`
-	Expires            bool   `json:"expires"`
-	ExpirationDateFrom string `json:"expiration_date_from"`
-	ExpirationDateTo   string `json:"expiration_date_to"`
+type SaleDetail struct {
+	ResponseCode    string `json:"response_code"`
+	ResponseMessage string `json:"response_message"`
+	Sale            struct {
+		Comments []struct {
+			ChangedByIP string `json:"changed_by_ip"`
+			Comment     string `json:"comment"`
+			Timestamp   string `json:"timestamp"`
+			Username    string `json:"username"`
+		} `json:"comments"`
+		Customer struct {
+			Address1       string      `json:"address_1"`
+			Address2       interface{} `json:"address_2"`
+			AddressID      string      `json:"address_id"`
+			CardholderName string      `json:"cardholder_name"`
+			City           string      `json:"city"`
+			CountryCode    string      `json:"country_code"`
+			CountryName    string      `json:"country_name"`
+			CustomerID     string      `json:"customer_id"`
+			EmailAddress   string      `json:"email_address"`
+			FirstName      string      `json:"first_name"`
+			Lang           string      `json:"lang"`
+			LastName       string      `json:"last_name"`
+			MiddleInitial  interface{} `json:"middle_initial"`
+			PayMethod      struct {
+				Avs            interface{} `json:"avs"`
+				Cvv            interface{} `json:"cvv"`
+				FirstSixDigits interface{} `json:"first_six_digits"`
+				LastTwoDigits  interface{} `json:"last_two_digits"`
+				Method         string      `json:"method"`
+			} `json:"pay_method"`
+			Phone      string      `json:"phone"`
+			PhoneExt   string      `json:"phone_ext"`
+			PostalCode string      `json:"postal_code"`
+			Prefix     interface{} `json:"prefix"`
+			State      string      `json:"state"`
+		} `json:"customer"`
+		DatePlaced string `json:"date_placed"`
+		DetailIP   struct {
+			Address     string `json:"address"`
+			AreaCode    int    `json:"area_code"`
+			City        string `json:"city"`
+			Country     string `json:"country"`
+			CountryCode string `json:"country_code"`
+			Region      string `json:"region"`
+			Zip         string `json:"zip"`
+		} `json:"detail_ip"`
+		Invoices []struct {
+			CustomerTotal  string      `json:"customer_total"`
+			DatePlaced     string      `json:"date_placed"`
+			DateShipped    interface{} `json:"date_shipped"`
+			DateVendorPaid interface{} `json:"date_vendor_paid"`
+			Fees2Co        string      `json:"fees_2co"`
+			InvoiceID      string      `json:"invoice_id"`
+			Lineitems      []struct {
+				AffiliateVendorID interface{} `json:"affiliate_vendor_id"`
+				Billing           struct {
+					Amount          string      `json:"amount"`
+					BillMethod      string      `json:"bill_method"`
+					BillingID       string      `json:"billing_id"`
+					CustomerAmount  string      `json:"customer_amount"`
+					CustomerID      string      `json:"customer_id"`
+					DateDeposited   string      `json:"date_deposited"`
+					DateEnd         interface{} `json:"date_end"`
+					DateFail        string      `json:"date_fail"`
+					DateNext        string      `json:"date_next"`
+					DatePending     string      `json:"date_pending"`
+					DateStart       string      `json:"date_start"`
+					LineitemID      string      `json:"lineitem_id"`
+					RecurringStatus string      `json:"recurring_status"`
+					Status          string      `json:"status"`
+					UsdAmount       string      `json:"usd_amount"`
+					VendorAmount    string      `json:"vendor_amount"`
+				} `json:"billing"`
+				Commission                  interface{}   `json:"commission"`
+				CommissionAffiliateVendorID interface{}   `json:"commission_affiliate_vendor_id"`
+				CommissionFlatRate          interface{}   `json:"commission_flat_rate"`
+				CommissionPercentage        interface{}   `json:"commission_percentage"`
+				CommissionType              interface{}   `json:"commission_type"`
+				CommissionUsdAmount         interface{}   `json:"commission_usd_amount"`
+				CustomerAmount              string        `json:"customer_amount"`
+				FlatRate                    interface{}   `json:"flat_rate"`
+				Installment                 string        `json:"installment"`
+				InvoiceID                   string        `json:"invoice_id"`
+				LcAffiliateVendorID         interface{}   `json:"lc_affiliate_vendor_id"`
+				LcUsdAmount                 interface{}   `json:"lc_usd_amount"`
+				LineitemID                  string        `json:"lineitem_id"`
+				LinkedID                    interface{}   `json:"linked_id"`
+				Options                     []interface{} `json:"options"`
+				Percentage                  interface{}   `json:"percentage"`
+				ProductDescription          string        `json:"product_description"`
+				ProductDuration             string        `json:"product_duration"`
+				ProductHandling             string        `json:"product_handling"`
+				ProductID                   string        `json:"product_id"`
+				ProductIsCart               string        `json:"product_is_cart"`
+				ProductName                 string        `json:"product_name"`
+				ProductPrice                string        `json:"product_price"`
+				ProductRecurrence           string        `json:"product_recurrence"`
+				ProductStartupFee           interface{}   `json:"product_startup_fee"`
+				ProductTangible             string        `json:"product_tangible"`
+				SaleID                      string        `json:"sale_id"`
+				Status                      string        `json:"status"`
+				Type                        interface{}   `json:"type"`
+				UsdAmount                   string        `json:"usd_amount"`
+				UsdCommission               interface{}   `json:"usd_commission"`
+				VendorAmount                string        `json:"vendor_amount"`
+				VendorProductID             string        `json:"vendor_product_id"`
+			} `json:"lineitems"`
+			Recurring     string      `json:"recurring"`
+			Referrer      string      `json:"referrer"`
+			SaleID        string      `json:"sale_id"`
+			Shipping      interface{} `json:"shipping"`
+			Status        string      `json:"status"`
+			UsdTotal      string      `json:"usd_total"`
+			VendorID      string      `json:"vendor_id"`
+			VendorOrderID string      `json:"vendor_order_id"`
+			VendorTotal   string      `json:"vendor_total"`
+		} `json:"invoices"`
+		IPAddress        string      `json:"ip_address"`
+		IPCountry        string      `json:"ip_country"`
+		RecurringDecline interface{} `json:"recurring_decline"`
+		SaleID           string      `json:"sale_id"`
+	} `json:"sale"`
 }
