@@ -4,19 +4,15 @@ type SaleDetail struct {
 	ResponseCode    string `json:"response_code"`
 	ResponseMessage string `json:"response_message"`
 	Sale            struct {
-		Comments []struct {
-			ChangedByIP string `json:"changed_by_ip"`
-			Comment     string `json:"comment"`
-			Timestamp   string `json:"timestamp"`
-			Username    string `json:"username"`
-		} `json:"comments"`
+		Comments []interface{} `json:"comments"`
 		Customer struct {
 			Address1       string      `json:"address_1"`
-			Address2       interface{} `json:"address_2"`
+			Address2       string      `json:"address_2"`
 			AddressID      string      `json:"address_id"`
 			CardholderName string      `json:"cardholder_name"`
 			City           string      `json:"city"`
 			CountryCode    string      `json:"country_code"`
+			CountryCode2   string      `json:"country_code_2"`
 			CountryName    string      `json:"country_name"`
 			CustomerID     string      `json:"customer_id"`
 			EmailAddress   string      `json:"email_address"`
@@ -27,8 +23,8 @@ type SaleDetail struct {
 			PayMethod      struct {
 				Avs            interface{} `json:"avs"`
 				Cvv            interface{} `json:"cvv"`
-				FirstSixDigits interface{} `json:"first_six_digits"`
-				LastTwoDigits  interface{} `json:"last_two_digits"`
+				FirstSixDigits string      `json:"first_six_digits"`
+				LastTwoDigits  string      `json:"last_two_digits"`
 				Method         string      `json:"method"`
 			} `json:"pay_method"`
 			Phone      string      `json:"phone"`
@@ -36,6 +32,7 @@ type SaleDetail struct {
 			PostalCode string      `json:"postal_code"`
 			Prefix     interface{} `json:"prefix"`
 			State      string      `json:"state"`
+			State2     interface{} `json:"state_2"`
 		} `json:"customer"`
 		DatePlaced string `json:"date_placed"`
 		DetailIP   struct {
@@ -48,13 +45,16 @@ type SaleDetail struct {
 			Zip         string `json:"zip"`
 		} `json:"detail_ip"`
 		Invoices []struct {
-			CustomerTotal  string      `json:"customer_total"`
-			DatePlaced     string      `json:"date_placed"`
-			DateShipped    interface{} `json:"date_shipped"`
-			DateVendorPaid interface{} `json:"date_vendor_paid"`
-			Fees2Co        string      `json:"fees_2co"`
-			InvoiceID      string      `json:"invoice_id"`
-			Lineitems      []struct {
+			ChangeID           string      `json:"change_id"`
+			CustomerName       string      `json:"customer_name"`
+			CustomerSnapshotID interface{} `json:"customer_snapshot_id"`
+			CustomerTotal      string      `json:"customer_total"`
+			DatePlaced         string      `json:"date_placed"`
+			DateShipped        interface{} `json:"date_shipped"`
+			DateVendorPaid     interface{} `json:"date_vendor_paid"`
+			Fees2Co            string      `json:"fees_2co"`
+			InvoiceID          string      `json:"invoice_id"`
+			Lineitems          []struct {
 				AffiliateVendorID interface{} `json:"affiliate_vendor_id"`
 				Billing           struct {
 					Amount          string      `json:"amount"`
@@ -62,14 +62,14 @@ type SaleDetail struct {
 					BillingID       string      `json:"billing_id"`
 					CustomerAmount  string      `json:"customer_amount"`
 					CustomerID      string      `json:"customer_id"`
-					DateDeposited   string      `json:"date_deposited"`
-					DateEnd         interface{} `json:"date_end"`
+					DateDeposited   interface{} `json:"date_deposited"`
+					DateEnd         string      `json:"date_end"`
 					DateFail        string      `json:"date_fail"`
-					DateNext        string      `json:"date_next"`
-					DatePending     string      `json:"date_pending"`
+					DateNext        interface{} `json:"date_next"`
+					DatePending     interface{} `json:"date_pending"`
 					DateStart       string      `json:"date_start"`
 					LineitemID      string      `json:"lineitem_id"`
-					RecurringStatus string      `json:"recurring_status"`
+					RecurringStatus interface{} `json:"recurring_status"`
 					Status          string      `json:"status"`
 					UsdAmount       string      `json:"usd_amount"`
 					VendorAmount    string      `json:"vendor_amount"`
@@ -82,7 +82,7 @@ type SaleDetail struct {
 				CommissionUsdAmount         interface{}   `json:"commission_usd_amount"`
 				CustomerAmount              string        `json:"customer_amount"`
 				FlatRate                    interface{}   `json:"flat_rate"`
-				Installment                 string        `json:"installment"`
+				Installment                 interface{}   `json:"installment"`
 				InvoiceID                   string        `json:"invoice_id"`
 				LcAffiliateVendorID         interface{}   `json:"lc_affiliate_vendor_id"`
 				LcUsdAmount                 interface{}   `json:"lc_usd_amount"`
@@ -102,25 +102,34 @@ type SaleDetail struct {
 				ProductTangible             string        `json:"product_tangible"`
 				SaleID                      string        `json:"sale_id"`
 				Status                      string        `json:"status"`
-				Type                        interface{}   `json:"type"`
+				Type                        string        `json:"type"`
 				UsdAmount                   string        `json:"usd_amount"`
 				UsdCommission               interface{}   `json:"usd_commission"`
 				VendorAmount                string        `json:"vendor_amount"`
 				VendorProductID             string        `json:"vendor_product_id"`
 			} `json:"lineitems"`
-			Recurring     string      `json:"recurring"`
-			Referrer      string      `json:"referrer"`
-			SaleID        string      `json:"sale_id"`
-			Shipping      interface{} `json:"shipping"`
-			Status        string      `json:"status"`
-			UsdTotal      string      `json:"usd_total"`
-			VendorID      string      `json:"vendor_id"`
-			VendorOrderID string      `json:"vendor_order_id"`
-			VendorTotal   string      `json:"vendor_total"`
+			NewCustomerQuoteID string      `json:"new_customer_quote_id"`
+			NewVendorQuoteID   string      `json:"new_vendor_quote_id"`
+			PayoutStatus       string      `json:"payout_status"`
+			Recurring          string      `json:"recurring"`
+			Referrer           interface{} `json:"referrer"`
+			SaleID             string      `json:"sale_id"`
+			Shipping           interface{} `json:"shipping"`
+			Status             string      `json:"status"`
+			Timestamp          string      `json:"timestamp"`
+			UsdTotal           string      `json:"usd_total"`
+			VendorID           string      `json:"vendor_id"`
+			VendorOrderID      interface{} `json:"vendor_order_id"`
+			VendorTotal        string      `json:"vendor_total"`
 		} `json:"invoices"`
 		IPAddress        string      `json:"ip_address"`
 		IPCountry        string      `json:"ip_country"`
 		RecurringDecline interface{} `json:"recurring_decline"`
 		SaleID           string      `json:"sale_id"`
 	} `json:"sale"`
+	Warnings []struct {
+		Code      string `json:"code"`
+		Message   string `json:"message"`
+		Parameter string `json:"parameter"`
+	} `json:"warnings"`
 }
