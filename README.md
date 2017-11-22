@@ -1,6 +1,8 @@
 # 2checkout-golang
 
-Basic library for 2Checkout's API
+Basic library for 2Checkout's API.
+
+This needs a major rework adding error checking and more methods.
 
 
 ## Install

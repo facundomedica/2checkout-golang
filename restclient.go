@@ -39,7 +39,7 @@ func (rest *RestClient) Execute(method string, url string, data RequestData, hea
 
 	req, _ := http.NewRequest(method, url, payload)
 
-	req.Header.Add("content-type", "application/json")
+	req.Header.Add("content-type", "application/x-www-form-urlencoded")
 	req.Header.Add("accept", "application/json")
 
 	if headers != nil {
@@ -78,7 +78,7 @@ func (rest *RestClient) ExecuteWithStringData(method string, url string, data st
 
 	req, _ := http.NewRequest(method, url, payload)
 
-	req.Header.Add("content-type", "application/json")
+	req.Header.Add("content-type", "application/x-www-form-urlencoded")
 	req.Header.Add("accept", "application/json")
 
 	if headers != nil {
